@@ -1,0 +1,153 @@
+@import "tailwindcss";
+
+/* Kelvin — layout: light "spec sheet" paper with a fine engineering grid; asymmetric 5/7 splits;
+   one deep-ink control-room band (process + quote). Readouts in mono.
+   Palette: papel #F3F5F7 · tinta #0B1424 · grafito #586273 · línea #D8DEE6 · voltio (accent) #1A4DF5 ·
+   aire #22B8E6 (semantic: airflow/cool only) · calor #F2683C (semantic: heat only, never decorative).
+   Type: Geist (600, tight) for display + body, Geist Mono for codes, units and live readouts. */
+
+@theme inline {
+  --color-papel: #f3f5f7;
+  --color-blanco: #ffffff;
+  --color-tinta: #0b1424;
+  --color-tinta-2: #111d33;
+  --color-grafito: #586273;
+  --color-linea: #d8dee6;
+  --color-voltio: #1a4df5;
+  --color-voltio-claro: #6f8dff;
+  --color-aire: #22b8e6;
+  --color-calor: #f2683c;
+
+  --font-sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+
+:root {
+  color-scheme: light;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6.5rem;
+}
+body {
+  margin: 0;
+  background: #f3f5f7;
+  color: #0b1424;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0 0 auto;
+  height: env(safe-area-inset-top, 0px);
+  z-index: 60;
+  background: #0b1424;
+}
+::selection {
+  background: #1a4df5;
+  color: #fff;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+@utility gutter {
+  padding-left: max(20px, env(safe-area-inset-left, 0px));
+  padding-right: max(20px, env(safe-area-inset-right, 0px));
+}
+/* Mono label: codes, units, section indices */
+@utility label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+/* Engineering grid paper */
+@utility grid-paper {
+  background-image:
+    linear-gradient(rgba(11, 20, 36, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(11, 20, 36, 0.05) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+@utility grid-paper-dark {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* Corner brackets for technical frames (from catalog 17 Ink Orbit) */
+.brackets {
+  position: relative;
+}
+.brackets::before,
+.brackets::after {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-color: currentColor;
+  border-style: solid;
+  pointer-events: none;
+  transition:
+    transform 0.35s var(--ease-out),
+    opacity 0.35s;
+}
+.brackets::before {
+  top: -7px;
+  left: -7px;
+  border-width: 1.5px 0 0 1.5px;
+}
+.brackets::after {
+  bottom: -7px;
+  right: -7px;
+  border-width: 0 1.5px 1.5px 0;
+}
+.brackets:hover::before {
+  transform: translate(-3px, -3px);
+}
+.brackets:hover::after {
+  transform: translate(3px, 3px);
+}
+
+/* Current pulse along dashed wires */
+@keyframes kv-dash {
+  to {
+    stroke-dashoffset: -48;
+  }
+}
+.kv-flow {
+  stroke-dasharray: 6 18;
+  animation: kv-dash 1.1s linear infinite;
+}
+@keyframes kv-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+.kv-blink {
+  animation: kv-blink 1.6s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .kv-flow,
+  .kv-blink {
+    animation: none;
+  }
+}

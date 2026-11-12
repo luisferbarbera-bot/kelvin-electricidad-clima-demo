@@ -1,0 +1,38 @@
+{
+  "name": "kelvin-electricidad-clima-demo",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev -p 3127",
+    "build": "next build",
+    "typecheck": "tsc --noEmit",
+    "build:artifact": "vite build && node scripts/postbuild-artifact.mjs"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "gsap": "^3.13.0",
+    "lucide-react": "^0.468.0",
+    "motion": "^12.23.0",
+    "next": "15.5.6",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "tailwind-merge": "^3.3.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.13",
+    "@tailwindcss/vite": "^4.1.13",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@vitejs/plugin-react": "^4.7.0",
+    "tailwindcss": "^4.1.13",
+    "typescript": "^5",
+    "vite": "^6.3.5",
+    "vite-plugin-singlefile": "^2.3.0"
+  },
+  "description": "Kelvin: bilingual (ES/EN) electrical + HVAC services demo site. Fictional business, concept by Lumo HQ.",
+  "engines": {
+    "node": ">=18.18"
+  }
+}
